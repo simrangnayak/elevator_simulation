@@ -1,0 +1,130 @@
+import numpy as np
+import pandas as pd
+import random
+
+# Input variables
+# floors that elevators are on (list) = start_floors
+# floors that elevators are pressed (list) = pressed_floors
+# floor_min
+# floor_max
+
+# Idea is not of efficiency but of no starvation 
+
+class Elevator(object):
+    def __init__(self, cur_floor, direction):
+        self.floor = cur_floor
+        self.direct = direction
+    def move(self):
+        if self.direct == 'down':
+            self.floor -= 1
+        if self.direct == 'up':
+            self.floor +=1
+
+class Building(object):
+    def __init__(self, pressed_floors, minimum_floor, maximum_floor, elevator):
+        self.floor = pressed_floors # dictionary of pressed floors
+        self.min_floor = minimum_floor
+        self.max_floor = maximum_floor
+        
+        self.down_floors = {}
+        self.up_floors = {}
+        for key, values in self.floor.items():
+            for value in values:
+                if value < key:
+                    if key not in self.down_floors:
+                        self.down_floors[key] = []
+                    self.down_floors[key].append(value)
+                else:
+                    if key not in self.up_floors:
+                        self.up_floors[key] = []
+                    self.up_floors[key].append(value)
+        
+        self.down_floors = dict(sorted(self.down_floors.items(), reverse=True))
+        self.up_floors = dict(sorted(self.up_floors.items()))
+
+        self.n_moves = 0
+
+    def direction_pressed(self):
+        first_floor = list(self.floor.keys())[0]
+
+        # check whether elevator is going in down or up direction first
+        # if same first_floor in down and up, check distance betweeen up and down direction for first movement
+        # in the list check which floor is pressed first
+
+        if first_floor in self.down_floors and first_floor in self.up_floors:
+            
+            first_down = list(self.down_floors.keys())[0]
+            first_down_request = self.down_floors[first_down]
+            min_down = abs(self.max_floor - self.min_floor)
+            for i in first_down_request:
+                holder = abs(first_down - i)
+                if holder <= min_down:
+                    min_down = holder
+            
+            first_up = list(self.up_floors.keys())[0]
+            first_up_request = self.up_floors[first_up]
+            min_up = abs(self.max_floor - self.min_floor)
+            for i in first_up_request:
+                    holder = abs(first_up - i)
+                    if holder <= min_up:
+                        min_up = holder   
+
+            min_direction = min(min_down, min_up)
+
+            if min_direction == min_down:
+                first_set = self.down_floors
+                second_set = self.up_floors
+                bool = True
+            else:
+                first_set = self.up_floors
+                second_set = self.down_floors
+                bool = False
+
+        elif first_floor in self.down_floors:
+            first_set = self.down_floors
+            second_set = self.up_floors
+            bool = True
+        
+        else:
+            first_set = self.up_floors
+            second_set = self.down_floors
+            bool = False
+
+        return first_set, second_set, bool
+
+    def active(self, first_set, bool):        
+        while first_set != {}:
+        # move elevator to first floor of direction_floors
+            idx = list(first_set.keys())[0]
+            while idx != elevator.floor:
+                if idx < elevator.floor:
+                    elevator.direct = 'down'
+                else:
+                    elevator.direct = 'up'
+                elevator.move()
+                self.n_moves += 1
+            
+            print("open door", elevator.floor, first_set, self.n_moves)
+            for value in first_set[idx]:
+                if value not in first_set:
+                    first_set[value] = []
+            del first_set[idx]
+          
+            first_set = dict(sorted(first_set.items(), reverse=bool))
+    
+    
+    def run(self):
+        first_set, second_set, bool = self.direction_pressed()
+        building.active(first_set, bool)
+        building.active(second_set, not bool) #need to do the opposite
+
+
+
+
+d = {1:[0], 4:[6], 5:[3,2,7], 2:[1,6]}
+d = {5:[2,7]}
+elevator = Elevator(cur_floor=3, direction='none')
+building = Building(pressed_floors=d, minimum_floor=0, maximum_floor=10, elevator=elevator)
+
+
+building.run()
