@@ -1,6 +1,3 @@
-import numpy as np
-import pandas as pd
-
 class Elevator(object):
     def __init__(self, cur_floor, direction):
         """
