@@ -17,8 +17,8 @@ def run():
         - This code raises an error if floors pressed are outside of the range of the building.
         - This concept behind this elevator system is not purely of efficiency but rather the policy of no starvation.
     """
-    # Keys represents the floors pressed in the building in the order they have been pressed
-    # Values represents the floors passengers intend to go to for that key
+    # Keys represent the floors pressed in the building in the order they have been pressed
+    # Values represent the floors passengers intend to go to for that key
     floors = {1:[0], 4:[6], 5:[3,2,7], 2:[1,6]}
 
     # Default position of elevators - this code assumes two elevators
