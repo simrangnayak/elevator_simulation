@@ -6,12 +6,13 @@ def run():
     """
     This takes a total of 4 inputs:
         - floors: dictionary of floors pressed
-        - ev_floor: position of elevator
+        - ev_floor_1: position of elevator 1
+        - ev_floor_2: plosition of elevator 2
         - min_floor: minimum floor of building
         - max_floor: maximum floor of building
     
     Assumptions:
-        - This code assumes one elevator.
+        - This code assumes two elevators.
         - This code requires floors pressed (both inside and outside the elevator) be in dictionary format: keys as floors passengers are on, values as floors passengers would like to go to.
         - This code raises an error if floors pressed are outside of the range of the building.
         - This concept behind this elevator system is not purely of efficiency but rather the policy of no starvation.
