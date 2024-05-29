@@ -33,7 +33,7 @@ def run():
 
     # Create elevator and building systems
     e1 = Elevator(cur_floor=ev_floor_1, direction=None)
-    e2 = Elevator(cur_floor=ev_floor_1, direction=None)
+    e2 = Elevator(cur_floor=ev_floor_2, direction=None)
     sys = System(e1_floor=ev_floor_1, e2_floor=ev_floor_2, pressed_floors=floors, minimum_floor=0, maximum_floor=10)
     e1_ideal, e2_ideal = sys.run()
 
