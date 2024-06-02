@@ -19,22 +19,22 @@ def run():
     """
     # Keys represent the floors pressed in the building in the order they have been pressed
     # Values represent the floors passengers intend to go to for that key
-    floors = {1:[0], 4:[6], 5:[3,2,7], 2:[1,6]}
+    floors = {11:[1], 5:[14,2], 16:[0]}
 
     # Default position of elevators - this code assumes two elevators
-    ev_floor_1 = 3
-    ev_floor_2 = 6
+    ev_floor_1 = 8
+    ev_floor_2 = 15
 
     # Minimum floor of building
     min_floor = 0
 
     # Maximum floor of building
-    max_floor = 10
+    max_floor = 16
 
     # Create elevator and building systems
     e1 = Elevator(cur_floor=ev_floor_1, direction=None)
     e2 = Elevator(cur_floor=ev_floor_2, direction=None)
-    sys = System(e1_floor=ev_floor_1, e2_floor=ev_floor_2, pressed_floors=floors, minimum_floor=0, maximum_floor=10)
+    sys = System(e1_floor=ev_floor_1, e2_floor=ev_floor_2, pressed_floors=floors, minimum_floor=min_floor, maximum_floor=max_floor)
     e1_ideal, e2_ideal = sys.run()
 
     # Creates building classes based on ideal floor assignments
